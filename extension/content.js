@@ -510,7 +510,7 @@ async function scanTargetUsers(actionType, settings = {}) {
         // If we are scanning followers/following of someone else, grab their ID from their profile page
         if (actionType === 'follow_followers' || actionType === 'follow_following') {
             const username = window.location.pathname.split('/').filter(Boolean)[0];
-            const invalidUsernames = ['p', 'reel', 'tv', 'explore', 'stories', 'direct'];
+            const invalidUsernames = ['p', 'reel', 'reels', 'tv', 'explore', 'stories', 'direct', 'accounts', 'popular'];
             if (username && !invalidUsernames.includes(username)) {
                 log(`@${username} için profil ID'si aranıyor...`, 'info');
                 const scrapedId = await getTargetUserId(username);
@@ -543,7 +543,7 @@ async function scanTargetUsers(actionType, settings = {}) {
             edgePath = 'edge_followed_by';
             varsObj = { id: targetUserId, first: 50 };
         } else if (actionType === 'follow_likers') {
-            const shortcodeMatch = window.location.pathname.match(/\/(?:p|reel|tv)\/([^\/]+)/);
+            const shortcodeMatch = window.location.pathname.match(/\/(?:p|reel|reels|tv)\/([^\/]+)/);
             if (!shortcodeMatch) {
                 throw new Error("Lütfen işlemi başlatmadan önce bir GÖNDERİ ekranına girin veya gönderiye tıklayın.");
             }
@@ -609,7 +609,7 @@ async function scanTargetUsers(actionType, settings = {}) {
         } else if (actionType === 'follow_commenters') {
             queryHash = queryHashCache.follow_commenters || '33ba35852cb50da46f5b5e889df7d159';
             edgePath = 'edge_media_to_comment';
-            const shortcodeMatch = window.location.pathname.match(/\/(?:p|reel|tv)\/([^\/]+)/);
+            const shortcodeMatch = window.location.pathname.match(/\/(?:p|reel|reels|tv)\/([^\/]+)/);
             if (!shortcodeMatch) {
                 throw new Error("Lütfen işlemi başlatmadan önce bir GÖNDERİ ekranına girin veya gönderiye tıklayın.");
             }
